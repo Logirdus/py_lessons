@@ -1,24 +1,14 @@
 numbers = ['0','1','2','3','4','5','6','7','8','9']
 count = ''
-#print(count + str(3))
-def counting(): pass
 
-restored = open('restored_file.txt', 'w')
-
-with open('text.txt', 'r') as quiz:
-    for line in quiz:
-        alfa = line[0]
+with open('input.txt', 'r') as input_file, open('output.txt', 'w') as output_file:
+    for line in input_file:
+        symbol = line[0]
         for i in range(1, len(line)):
-            if line[i] not in numbers or i+1 > len(line):
-                print(alfa * int(count), end='')
-                restored.write(alfa * int(count))
-                alfa = line[i]
+            if line[i] not in numbers:
+                output_file.write(symbol * int(count))
+                symbol = line[i]
                 count = ''
             else:
                 count += str(line[i])
-        restored.write(alfa * int(count))
-        print(alfa * int(count), end='')
-            #print(line[i])
-
-
-restored.close()
+        output_file.write(symbol * int(count))
