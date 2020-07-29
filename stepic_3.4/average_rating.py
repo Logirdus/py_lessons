@@ -22,6 +22,7 @@ Sample Output:
 71.666666667
 81.0 84.0 85.666666667
 '''
+import os
 
 
 def average(ratings):
@@ -35,7 +36,7 @@ def average(ratings):
 def overall_rating(base):
     '''
     функция сбора оценок по предметам для потока
-    :param d: словарь с оценками всех учеников
+    :param base: словарь с оценками всех учеников
     :return: средние балы по предметам
     '''
     mat, phis, lang = [], [], []
@@ -49,17 +50,20 @@ def overall_rating(base):
 
 #Создаем пустую базу абитуриентов
 base = {}
-mat = []
+mat, phis, rus = [], [], []
 with open('input.txt', 'r') as inf, open('output.txt', 'w') as ouf:
 #Заполняем базу значениями из файла input.txt
     for line in inf:
         line = line.strip().split(';')
         for i in line:
             base[line[0]] = [line[1], line[2], line[3]]
+        mat.append(line[1])
+        phis.append(line[2])
+        rus.append(line[3])
 #Считаем средние балы для каждого абитуриента
     for key, value in base.items():
         print(average(value))
 
 #Собираем все оценки по предметам для потока
-
-print(overall_rating(base))
+for i in [mat, phis, rus]:
+    print(average(i), end=' ')
