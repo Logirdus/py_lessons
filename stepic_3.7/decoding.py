@@ -42,3 +42,22 @@ Sample Output 2:
 badc
 dcba
 """
+# Считываем строки с алфавитом шифрации и делаем из низ словарь decoding_dict
+a = [i for i in input()]
+# 'abcd'
+b = [i for i in input()]
+# '*d%#'
+coding_dict, decoding_dict = {}, {}
+for i in range(len(a)):
+    coding_dict[a[i]] = b[i]
+    decoding_dict[b[i]] = a[i]
+
+string_for_coding = input()
+for k in string_for_coding:
+    print(*coding_dict[k], end='')
+print()
+
+#print(string_for_coding)
+string_for_decoding = input()
+for k in string_for_decoding:
+    print(decoding_dict[k], end='')
