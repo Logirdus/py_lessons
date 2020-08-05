@@ -6,15 +6,15 @@
 Все файлы располагаются в каталоге по адресу:
 https://stepic.org/media/attachments/course67/3.6.3/
 
-Загрузите содержимое ﻿последнего файла из набора, как ответ на это задание.
+Загрузите содержимое последнего файла из набора, как ответ на это задание.
 """
 import requests
 
-with open('chainlink.txt', 'r') as chainlink:
-    url = chainlink.readline().strip()
-answer = '    '
-while answer != 'We':
-
-    answer = requests.get(url).text[:2]
-    url = 'https://stepic.org/media/attachments/course67/3.6.3/' + requests.get(url).text
-else: print(requests.get(url).text)
+with open('chainlink.txt', 'r') as starturl:
+    url = starturl.readline().strip()
+    content = requests.get(url).text
+    while content[:2] != 'We':
+        content = requests.get(url).text
+        url = 'https://stepic.org/media/attachments/course67/3.6.3/' + content
+with open('chainanswer.txt', 'w') as ans:
+    ans.write(content)
