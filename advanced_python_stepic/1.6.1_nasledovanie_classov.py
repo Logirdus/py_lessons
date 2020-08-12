@@ -68,6 +68,12 @@ Yes
 No
 """
 
+
+def found_parent(class_search, class_search_parent):
+    if class_search_parent in classes[class_search]:
+        return True
+
+
 classes = {}
 n = int(input())
 for i in range(n):
@@ -83,7 +89,8 @@ for i in range(q):
     class_search_parent = class_search_description[0]
     class_search = class_search_description[1]
     # print(class_search_parent, class_search)
-    if class_search_parent in classes[class_search]:
+    # if class_search_parent in classes[class_search] or class_search_parent == class_search:
+    if found_parent(class_search, class_search_parent) or class_search_parent == class_search:
         print('Yes')
     else:
         print('No')
