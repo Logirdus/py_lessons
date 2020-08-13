@@ -37,7 +37,9 @@ class C(B):
 
 В первой строке входных данных содержится целое число n - число классов.
 
-В следующих n строках содержится описание наследования классов. В i-й строке указано от каких классов наследуется i-й класс. Обратите внимание, что класс может ни от кого не наследоваться. Гарантируется, что класс не наследуется сам от себя (прямо или косвенно), что класс не наследуется явно от одного класса более одного раза.
+В следующих n строках содержится описание наследования классов. В i-й строке указано от каких классов наследуется i-й
+класс. Обратите внимание, что класс может ни от кого не наследоваться. Гарантируется, что класс не наследуется сам от
+себя (прямо или косвенно), что класс не наследуется явно от одного класса более одного раза.
 
 В следующей строке содержится число q - количество запросов.
 
@@ -45,7 +47,8 @@ class C(B):
 Имя класса – строка, состоящая из символов латинского алфавита, длины не более 50.
 Формат выходных данных
 
-Для каждого запроса выведите в отдельной строке слово "Yes", если класс 1 является предком класса 2, и "No", если не является.
+Для каждого запроса выведите в отдельной строке слово "Yes", если класс 1 является предком класса 2, и "No", если не
+является.
 
 Sample Input:
 
@@ -60,6 +63,16 @@ B D
 C D
 D A
 
+
+3
+A
+B : A
+C : B
+3
+A B
+B C
+A C
+
 Sample Output:
 
 Yes
@@ -69,18 +82,29 @@ No
 """
 
 
+
 def found_parent(class_search, class_search_parent):
-    if class_search_parent in classes[class_search]:
+    # алгоритм поиска в глубину https://foxford.ru/wiki/informatika/algoritm-poiska-v-glubinu
+    # ищем все пути из класса class_search до корня (класса без предков)
+    # посещенные классы отмечаем в списке visited, чтобы не посещать их дважды
+    visited.append(class_search)
+    for p in classes[class_search]:
+        if p not in visited:
+            found_parent(p, class_search_parent)
+    # ищем предка в списке par
+    if class_search_parent in visited:
         return True
+    else:
+        return False
 
 
 classes = {}
+# заполняем словарь classes
 n = int(input())
 for i in range(n):
     class_description = input().split()
     class_name = class_description[0]
     class_parents = class_description[2:]
-    # print(class_name, class_parents)
     classes[class_name] = class_parents
 
 q = int(input())
@@ -88,8 +112,7 @@ for i in range(q):
     class_search_description = input().split()
     class_search_parent = class_search_description[0]
     class_search = class_search_description[1]
-    # print(class_search_parent, class_search)
-    # if class_search_parent in classes[class_search] or class_search_parent == class_search:
+    visited = []
     if found_parent(class_search, class_search_parent) or class_search_parent == class_search:
         print('Yes')
     else:
